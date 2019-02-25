@@ -1,0 +1,23 @@
+{
+  "name": "elc-sample",
+  "version": "0.0.0",
+  "description": "Sample using ELC",
+  "main": "index.js",
+  "scripts": {
+    "prepare": "npm run build",
+    "build": "webpack",
+    "watch": "webpack -w"
+  },
+  "keywords": [
+    "demo"
+  ],
+  "private": true,
+  "author": "WSDOT",
+  "license": "Unlicense",
+  "devDependencies": {
+    "@types/arcgis-js-api": "^4.10.0",
+    "webpack": "^4.29.5",
+    "webpack-cli": "^3.2.3",
+    "wsdot-elc": "^4.0.0-0"
+  }
+}
