@@ -4,7 +4,7 @@
   "description": "Sample using ELC",
   "main": "index.js",
   "scripts": {
-    "prepare": "npm run build",
+    "prepare": "node scripts/generate-css.js npm run build",
     "build": "webpack",
     "watch": "webpack -w"
   },
@@ -16,6 +16,7 @@
   "license": "Unlicense",
   "devDependencies": {
     "@types/arcgis-js-api": "^4.10.0",
+    "@wsdot/elc-ui": "^4.0.0-0",
     "source-map": "^0.7.3",
     "webpack": "^4.29.5",
     "webpack-cli": "^3.2.3",

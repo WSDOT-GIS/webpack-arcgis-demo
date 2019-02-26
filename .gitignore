@@ -1,4 +1,5 @@
 dist
+Style/elc*
 
 .vscode/*
 !.vscode/settings.json

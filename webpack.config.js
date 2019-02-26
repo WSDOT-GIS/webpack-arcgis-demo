@@ -8,5 +8,6 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     filename: 'main.js',
     libraryTarget: "amd" // This line makes the output consumable by ArcGIS API AMD loader
-  }
+  },
+  externals: /^(esri|dojo)/
 };
