@@ -56,6 +56,8 @@ const routeLocator = new RouteLocator();
 })();
 
 // After the view has loaded, setup the event handlers for the ELC UI.
+// Implementation for the older v3 ArcGIS API can be found here:
+// https://github.com/WSDOT-GIS/elc-js/tree/master/packages/elc-ui-arcgis-v3
 view.when(() => {
   elcUI.root.addEventListener("find-route-location-submit", async (e) => {
     const routeLocation = new RouteLocation(e.detail);
@@ -67,7 +69,8 @@ view.when(() => {
   });
 
   elcUI.root.addEventListener("find-nearest-route-location-submit", async (e) => {
-    console.log("find-nearest-route-location-submit radius", e.detail);
+    const { radius } = e.detail;
+    console.log("find-nearest-route-location-submit: radius", radius);
 
     // TODO: When this event is triggered, call code to handle map click event
     // then call routeLocator.findNearestRouteLocations() using the point where the user

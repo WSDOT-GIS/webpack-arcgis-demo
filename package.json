@@ -4,7 +4,7 @@
   "description": "Sample using ELC",
   "main": "index.js",
   "scripts": {
-    "prepare": "node scripts/generate-css.js npm run build",
+    "prepare": "node scripts/generate-css.js && npm run build",
     "build": "webpack",
     "watch": "webpack -w"
   },
