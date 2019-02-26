@@ -12,6 +12,7 @@ Demonstrates using [webpack] with the [ArcGIS API for JavaScript].
 
 1. Clone this repository to your computer.
 2. Run `npm install` to install dependencies and build.
+3. There should be a file called `dist/main.js`
 
 
 ## Steps used to create this project

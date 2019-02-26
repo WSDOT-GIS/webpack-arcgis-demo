@@ -10,20 +10,31 @@
 <body>
     <p>Look at the console for ELC results</p>
     <script>
+        // Tell the ArcGIS API / Dojo module loader where to find your file
+        // This is a self-executing function. Used here to avoid adding unnecessary variables
+        // to the global scope.
         (function() {
+            // Get the location URL of the web application. (Assumes that the index.html part is omitted)
             var root = location.href;
             var dojoConfig = {
                 packages: [
+                    // Defines an AMD module named "app", located in the \
+                    // "dist" subdirectory of your application.
                     {
                         name: "app",
+                        // Relative path won't work here, as it will try to load it from
+                        // the same server that the ArcGIS API is coming from.
+                        // You have to combine the current URL with "dist" folder.
                         location: root + "/dist"
                     }
                 ]
             }
+            // Explicitly define global "dojoConfig" variable.
             window.dojoConfig = dojoConfig;
         }());
     </script>
     <script src="https://js.arcgis.com/4.10/"></script>
+    <!-- Tell the API to load your module. -->
     <script>require(["app"])</script>
 </body>
 </html>
