@@ -4,3 +4,7 @@ html, body, #map {
     height: 100%;
     width: 100%;
   }
+
+.flex-row {
+  flex-wrap: wrap;
+}

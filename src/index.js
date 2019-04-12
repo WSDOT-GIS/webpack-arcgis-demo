@@ -64,11 +64,12 @@ map.add(graphicsLayer);
   console.log("routes", routes);
 })();
 
+// Setup default symbology and template content.
 const defaultLineSymbol = new SimpleLineSymbol();
 const defaultPointSymbol = new SimpleMarkerSymbol();
 const defaultTemplate = new PopupTemplate({
-  content: "{*}",
-  title: "{Route}"
+  content: "{*}", // This will display all attributes of the selected graphic.
+  title: "{Route}" // This will show the "Route" attribute of the selected graphic.
 });
 
 /**
@@ -79,8 +80,10 @@ const defaultTemplate = new PopupTemplate({
 function routeLocationToGraphic(routeLocation) {
   const routeGeometry = routeLocation.RouteGeometry;
   delete routeLocation.RouteGeometry;
-  let gType = routeGeometry.__type;
   let symbol;
+  // Detect the geometry type.
+  // Set the symbol to appropriate default for geometry type.
+  let gType = routeGeometry.__type;
   if (/Polyline/i.test(gType)) {
     gType = "polyline";
     symbol = defaultLineSymbol;
@@ -90,11 +93,14 @@ function routeLocationToGraphic(routeLocation) {
   } else {
     throw new TypeError(`unexpected geometry type ${gType}`);
   }
+  // Remove the __type property and replace with ArcGIS style type property.
   delete routeGeometry.__type;
   routeGeometry.type = gType;
+
+  // Create and return the Graphic object.
   return new Graphic({
     geometry: routeGeometry,
-    attributes: routeLocation.toJSON(),
+    attributes: routeLocation.toJSON(), // Convert to JSON so that popups do not display prototype functions, etc.
     symbol,
     popupTemplate: defaultTemplate
   });
@@ -103,26 +109,28 @@ function routeLocationToGraphic(routeLocation) {
 // After the view has loaded, setup the event handlers for the ELC UI.
 view.when(() => {
   elcUI.root.addEventListener("find-route-location-submit", async (e) => {
+    // Create a route location using event detail.
     const routeLocation = new RouteLocation(e.detail);
-    console.log("find-route-location-submit", routeLocation);
+    // Call ELC find route locations
     const locations = await routeLocator.findRouteLocations({ locations: [routeLocation], outSR: mapSR });
-    console.log("locations", locations);
+    // Convert found route locations to ArcGIS Graphics.
     const graphics = locations.map(routeLocationToGraphic);
-    console.debug("graphics", graphics);
-    // add graphic to map or show popup.
+    // add graphics to the Graphics layer.
     graphicsLayer.addMany(graphics);
-
+    // Open the popup to show the graphics.
     view.popup.open({
       features: graphics
     });
   });
 
+  // This event is triggered when the user clicks the button to find *nearest* route location.
+  // Once user has clicked this button, they must click one more time on the map near a
+  // state route (within the search radius).
   elcUI.root.addEventListener("find-nearest-route-location-submit", async (e) => {
+    // Get the search radius from the event detail.
     const { radius } = e.detail;
-    console.log("find-nearest-route-location-submit: radius", radius);
 
-
-    view.on("click", async (ev) => {
+    const handle = view.on("click", async (ev) => {
       const point = ev.mapPoint;
       const locations = await routeLocator.findNearestRouteLocations({
         coordinates: [point.x, point.y],
@@ -136,6 +144,8 @@ view.when(() => {
       view.popup.open({
         features: graphics
       });
+      // Disconnect the click event after it has been triggered.
+      handle.remove();
     });
   });
 
