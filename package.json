@@ -15,11 +15,11 @@
   "author": "WSDOT",
   "license": "Unlicense",
   "devDependencies": {
-    "@types/arcgis-js-api": "^4.10.0",
+    "@types/arcgis-js-api": "^4.11.0",
     "@wsdot/elc-ui": "^4.0.0-0",
     "source-map": "^0.7.3",
-    "webpack": "^4.29.5",
-    "webpack-cli": "^3.2.3",
+    "webpack": "^4.30.0",
+    "webpack-cli": "^3.3.0",
     "wsdot-elc": "^4.0.0-0"
   }
 }
